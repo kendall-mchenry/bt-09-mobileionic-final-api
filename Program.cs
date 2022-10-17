@@ -1,3 +1,7 @@
+
+using final_task_api.Migrations;
+using final_task_api.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +10,13 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// DI for database
+builder.Services.AddSqlite<TasksDbContext>("Data Source=TasksSqlDatabase.db");
+
+// DI for repository & CRUD methods
+builder.Services.AddScoped<ITasksRepository, TasksRepository>();
+
 
 var app = builder.Build();
 
